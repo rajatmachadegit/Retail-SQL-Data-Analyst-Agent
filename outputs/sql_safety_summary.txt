@@ -1,0 +1,23 @@
+=========================================
+SQL SAFETY GUARDRAIL SECURITY SUMMARY
+=========================================
+Implementation: src/safety.py
+Driver Interface: src/sql_tools.py
+
+Security Checks Performed:
+1. READ-ONLY COMMAND ENFORCEMENT:
+   Queries are strictly validated to ensure they begin with approved read-only starting tokens:
+   - SELECT, WITH, SHOW, DESCRIBE, EXPLAIN.
+   Any query starting with update, delete, create, insert, or drop is immediately rejected.
+
+2. FORBIDDEN KEYWORD DETECTOR:
+   The query string is evaluated against regular expression word-boundary filters for destructive actions:
+   - DROP, DELETE, UPDATE, INSERT, ALTER, TRUNCATE, CREATE, REPLACE, GRANT, REVOKE, EXEC, EXECUTE.
+
+3. MULTI-STATEMENT / SEMICOLON INJECTION SHIELD:
+   Prevents query stacking by stripping trailing semicolons and checking for any inner semicolons.
+   Queries like 'SELECT * FROM products; DROP TABLE customers;' are instantly intercepted and flagged.
+
+Validation Verification:
+- Unit tests executed via pytest cover both authorized read-only structures (SELECT / WITH) and
+  unauthorized statements, showing 100% security intercept compliance.

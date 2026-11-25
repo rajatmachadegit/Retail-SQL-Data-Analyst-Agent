@@ -1,0 +1,28 @@
+--- Starting Automated Data Loading Script ---
+
+Clearing existing table records to prevent primary key conflicts...
+Prior records successfully cleared.
+
+Ingesting datasets...
+Successfully loaded 15 rows into table: 'stores'
+Successfully loaded 10 rows into table: 'products'
+C:\Users\rajat.machade\Desktop\Sql_Agentic\database\load_data.py:40: UserWarning: Parsing dates in %Y-%m-%d format when dayfirst=True was specified. Pass `dayfirst=False` or specify a format to silence this warning.
+  parsed = pd.to_datetime(df[col], dayfirst=True, errors='coerce')
+Successfully loaded 80 rows into table: 'customers'
+C:\Users\rajat.machade\Desktop\Sql_Agentic\database\load_data.py:40: UserWarning: Parsing dates in %Y-%m-%d format when dayfirst=True was specified. Pass `dayfirst=False` or specify a format to silence this warning.
+  parsed = pd.to_datetime(df[col], dayfirst=True, errors='coerce')
+Successfully loaded 360 rows into table: 'sales_transactions'
+C:\Users\rajat.machade\Desktop\Sql_Agentic\database\load_data.py:40: UserWarning: Parsing dates in %Y-%m-%d format when dayfirst=True was specified. Pass `dayfirst=False` or specify a format to silence this warning.
+  parsed = pd.to_datetime(df[col], dayfirst=True, errors='coerce')
+Successfully loaded 46 rows into table: 'returns'
+
+Database transactions committed successfully!
+
+--- Initial Verification Row Counts ---
+Table 'stores': 15 rows verified in MySQL database.
+Table 'products': 10 rows verified in MySQL database.
+Table 'customers': 80 rows verified in MySQL database.
+Table 'sales_transactions': 360 rows verified in MySQL database.
+Table 'returns': 46 rows verified in MySQL database.
+
+Database connection closed. Ingestion process complete.

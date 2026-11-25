@@ -1,0 +1,26 @@
+=========================================
+CONVERSATIONAL MEMORY TRACKING SUMMARY
+=========================================
+State Engine: LangGraph StateGraph (src/graph.py)
+State Schema: AgentState TypedDict (src/memory.py)
+
+Memory Design and Persistence Architecture:
+1. AGENTSTATE STRUCTURAL CONTEXT:
+   Our system uses a linear LangGraph StateGraph pipeline where a shared AgentState is passed between
+   nodes. The state schema stores:
+   - user_question (str)
+   - sql_query (str)
+   - query_status (str) -> success, rejected, error
+   - query_results (list)
+   - final_answer (str)
+   - history (list of dicts) -> Retains running conversational dialog list [{"role": "user", "content": "..."}, {"role": "assistant", "content": "..."}]
+
+2. HISTORY PROPAGATION (LOOK-BACK):
+   During the SQL Generation Node, the agent checks the `state["history"]` logs. If prior turns exist,
+   the conversation history is structured and fed directly into the system instructions.
+   This allows the LLM to understand context-dependent pronouns and filters on the subsequent turns.
+
+3. RESPONSE STATE RE-INJECTION:
+   Once the Final Answer Node prepares the retail business summary, it automatically appends the
+   latest user query and assistant answer to the `history` log. The updated state is then loaded back
+   into the client application loop for the next turn.
